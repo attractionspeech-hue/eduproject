@@ -182,3 +182,29 @@
     border-right-color: var(--border);
   }
 }
+.evaluation-card {
+  text-align: left;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.evaluation-field label {
+  display: block;
+  text-align: left;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.evaluation-criterion {
+  text-align: left;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.total-score {
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 20px;
+}
