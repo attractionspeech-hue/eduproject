@@ -324,7 +324,7 @@ export const Chatbot: React.FC = () => {
     return nodes;
   };
 
-  const renderMarkdownResponse = (content: string) => {
+  const renderMarkdownResponse = (content: string, headingColor = '#5b21b6') => {
     const lines = content.split(/\r?\n/);
     const elements: React.ReactNode[] = [];
     let paragraphLines: string[] = [];
@@ -369,7 +369,17 @@ export const Chatbot: React.FC = () => {
         const level = headingMatch[1].length;
         const text = headingMatch[2];
         elements.push(
-          <div key={`h-${index}`} className={`analysis-md-heading level-${level}`}>
+          <div 
+          key={`h-${index}`}
+    className={`analysis-md-heading level-${level}`}
+    style={{
+      fontSize: level === 2 ? '1.55rem' : '1.25rem',
+      fontWeight: 900,
+      color: headingColor,
+      marginTop: '18px',
+      marginBottom: '10px',
+    }}
+          >
             {parseInlineMarkdown(text)}
           </div>
         );
@@ -414,19 +424,48 @@ export const Chatbot: React.FC = () => {
           className="results-title"
           style={{
             textAlign: 'left',
-            fontSize: '2rem',
+            fontSize: '2.2rem',
+            fontWeight: 900,
             marginBottom: '24px',
+            color: '#16a34a',
+            background: 'none',
+    WebkitBackgroundClip: 'initial',
+    WebkitTextFillColor: '#166534',
           }}
           > 말하기능력 평가표
           </h2>
 
           {!evaluationResult ? (
+            <>
             <div 
+  style={{
+    backgroundColor: '#f0fdf4',
+    border: '1px solid #bbf7d0',
+    borderRadius: '12px',
+    padding: '16px',
+    marginBottom: '24px',
+    color: '#166534',
+    fontSize: '15px',
+    lineHeight: 1.7,
+    textAlign: 'left',
+  }}
+>
+  <strong style={{ display: 'block', fontSize: '16px', marginBottom: '6px' }}>
+    평가 전 안내
+  </strong>
+  말하기 연습 후 화면 녹화를 진행해주세요. 녹화된 영상을 다시 보면서 아래 3개 영역의 점수를 직접 입력해 주세요.
+</div>
+
+   <div 
             className="evaluation-card"
             style={{
               textAlign: 'left',
-              fontSize: '1.15rem',
-              lineHeight: 1.8,
+    fontSize: '1.15rem',
+    lineHeight: 1.8,
+    border: '1px solid #bbf7d0',
+    backgroundColor: '#f0fdf4',
+    borderRadius: '16px',
+    padding: '24px',
             }}
             >
               <div 
@@ -464,7 +503,18 @@ export const Chatbot: React.FC = () => {
                     >
                     내용을 적절하게 선정하고, 논리적으로 조직하는 능력
                     </p>
-                  <div className="evaluation-criteria-list">
+<div
+  className="evaluation-criteria-list"
+  style={{
+    borderLeft: '4px solid #22c55e',
+    backgroundColor: '#ffffff',
+    color: '#14532d',
+fontWeight: 500,
+    padding: '14px 18px',
+    borderRadius: '10px',
+    marginBottom: '16px',
+  }}
+>
                     <p className="evaluation-criterion"
                     style={{fontSize: '15px',lineHeight: 1.8,marginBottom: '10px',}}>
                       • 주제에 맞는 내용을 적절하게 골랐는가</p>
@@ -479,18 +529,26 @@ export const Chatbot: React.FC = () => {
                       • 처음부터 끝까지 내용이 일관되었는가</p>
                   </div>
                   <input
-                    id="content"
-                    type="number"
-                    min="0"
-                    max="5"
-                    value={contentScore}
-                    onChange={(e) => {
-                      const val = Math.min(5, Math.max(0, parseInt(e.target.value) || 0));
-                      setContentScore(val.toString());
-                    }}
-                    className="score-input"
-                    placeholder="0"
-                  />
+  id="content"
+  type="number"
+  min="0"
+  max="5"
+  value={contentScore}
+  onChange={(e) => {
+    const val = Math.min(5, Math.max(0, parseInt(e.target.value) || 0));
+    setContentScore(val.toString());
+  }}
+  className="score-input"
+  placeholder="0"
+  style={{
+    fontSize: '24px',
+    fontWeight: 700,
+    padding: '4px 8px',
+    height: '48px',
+     color: '#166534',
+  border: '1px solid #86efac',
+  }}
+  />
                 </div>
                 <div 
                 className="evaluation-field"
@@ -517,7 +575,18 @@ export const Chatbot: React.FC = () => {
                     }}
                     >발음, 어휘와 문장, 준언어적 요소, 비언어적 요소, 말하는 속도, 태도
                       </p>
-                  <div className="evaluation-criteria-list">
+<div
+  className="evaluation-criteria-list"
+  style={{
+    borderLeft: '4px solid #22c55e',
+    backgroundColor: '#ffffff',
+    color: '#14532d',
+fontWeight: 500,
+    padding: '14px 18px',
+    borderRadius: '10px',
+    marginBottom: '16px',
+  }}
+>
                     <p className="evaluation-criterion"
                     style={{fontSize: '15px',lineHeight: 1.8,marginBottom: '10px',}}>
                       • 말소리가 명확하고 알아듣기 쉬운가</p>
@@ -543,12 +612,20 @@ export const Chatbot: React.FC = () => {
                     max="10"
                     value={expressionScore}
                     onChange={(e) => {
-                      const val = Math.min(10, Math.max(0, parseInt(e.target.value) || 0));
-                      setExpressionScore(val.toString());
-                    }}
-                    className="score-input"
-                    placeholder="0"
-                  />
+    const val = Math.min(10, Math.max(0, parseInt(e.target.value) || 0));
+    setExpressionScore(val.toString());
+  }}
+  className="score-input"
+  placeholder="0"
+  style={{
+    fontSize: '24px',
+    fontWeight: 700,
+    padding: '4px 8px',
+    height: '48px',
+     color: '#166534',
+  border: '1px solid #86efac',
+  }}
+/>
                 </div>
                 <div 
                 className="evaluation-field" 
@@ -575,7 +652,19 @@ export const Chatbot: React.FC = () => {
                     }}
                     >청중의 주의를 끌고, 청중의 반응을 수용하며 소통하는 능력
                       </p>
-                  <div className="evaluation-criteria-list">
+                      <div
+  className="evaluation-criteria-list"
+  style={{
+    borderLeft: '4px solid #22c55e',
+    backgroundColor: '#ffffff',
+    color: '#14532d',
+fontWeight: 500,
+    padding: '14px 18px',
+    borderRadius: '10px',
+    marginBottom: '16px',
+  }}
+>
+
                     <p className="evaluation-criterion"
                     style={{fontSize: '15px',lineHeight: 1.8,marginBottom: '10px',}}>
                       • 청중이 말에 집중하도록 이끄는가</p>
@@ -588,38 +677,72 @@ export const Chatbot: React.FC = () => {
                     <p className="evaluation-criterion"
                     style={{fontSize: '15px',lineHeight: 1.8,marginBottom: '10px',}}>• 청중 반응에 따라 말의 방식이나 태도를 조절하는가</p>
                   </div>
-                  <input
-                    id="interaction"
-                    type="number"
-                    min="0"
-                    max="5"
-                    value={interactionScore}
-                    onChange={(e) => {
-                      const val = Math.min(5, Math.max(0, parseInt(e.target.value) || 0));
-                      setInteractionScore(val.toString());
-                    }}
-                    className="score-input"
-                    placeholder="0"
-                  />
+             <input
+  id="interaction"
+  type="number"
+  min="0"
+  max="5"
+  value={interactionScore}
+  onChange={(e) => {
+    const val = Math.min(5, Math.max(0, parseInt(e.target.value) || 0));
+    setInteractionScore(val.toString());
+  }}
+  className="score-input"
+  placeholder="0"
+  style={{
+    fontSize: '24px',
+    fontWeight: 700,
+    padding: '4px 8px',
+    height: '48px',
+     color: '#166534',
+  border: '1px solid #86efac',
+  }}
+/>
                 </div>
               </div>
-
-              <div className="total-score">
+<div
+              className="total-score"
+                style={{
+    backgroundColor: '#dcfce7',
+    border: '1px solid #86efac',
+    color: '#166534',
+    padding: '16px',
+    borderRadius: '12px',
+    fontWeight: 900,
+    marginTop: '20px',
+    marginBottom: '20px',
+  }}
+  >
                 총점: {(contentScore ? parseInt(contentScore) : 0) + (expressionScore ? parseInt(expressionScore) : 0) + (interactionScore ? parseInt(interactionScore) : 0)} / 20점
               </div>
 
               {error && <div className="error-message">{error}</div>}
 
               <button
+              style={{
+  background: '#16a34a',
+  backgroundImage: 'none',
+  color: '#ffffff',
+}}
                 className="btn btn-primary"
                 onClick={handleEvaluationSubmit}
                 disabled={loading}
               >
                 {loading ? '평가중...' : '평가 결과 보기'}
               </button>
+              
             </div>
+            </>
           ) : (
-            <div className="analysis-result evaluation-result">
+            <div 
+            className="analysis-result evaluation-result"
+            style={{
+    backgroundColor: '#f0fdf4',
+    border: '1px solid #bbf7d0',
+    borderRadius: '16px',
+    padding: '24px',
+  }}
+            >
               <h3>📊 평가 결과</h3>
               <div className="evaluation-scores">
                 <div className="score-item"
@@ -652,16 +775,33 @@ export const Chatbot: React.FC = () => {
                   청중의 주의를 끌고, 청중의 반응을 수용하며 소통하는 능력
                  </div>
                 </div>
-                <div className="score-item total">
+                <div className="score-item total"
+                style={{
+    color: '#166534',
+    fontSize: '1.2rem',
+    fontWeight: 900,
+    backgroundColor: '#dcfce7',
+    border: '1px solid #86efac',
+    borderRadius: '12px',
+    padding: '14px 16px',
+    marginTop: '16px',
+  }}
+                >
                   <strong>총점:</strong> {(parseInt(contentScore) || 0) + (parseInt(expressionScore) || 0) + (parseInt(interactionScore) || 0)}점 / 20점
                 </div>
               </div>
 
               <div className="analysis-text">
-                {renderMarkdownResponse(evaluationResult)}
+                {renderMarkdownResponse(evaluationResult, '#166534')}
               </div>
 
               <button
+              style={{
+  background: '#16a34a',
+  backgroundImage: 'none',
+  color: '#ffffff',
+  border: '1px solid #81e6a8',
+}}
                 className="btn btn-secondary"
                 onClick={() => {
                   setEvaluationResult('');
@@ -672,10 +812,15 @@ export const Chatbot: React.FC = () => {
               >
                 다시 평가하기
               </button>
-            </div>
-          )}
 
+            </div>
+     )}
           <button
+          style={{
+  background: '#16a34a',
+  backgroundImage: 'none',
+  color: '#ffffff',
+}}
             className="btn btn-primary"
             onClick={() => {
               setShowSpeakingEvaluation(false);
@@ -863,9 +1008,11 @@ export const Chatbot: React.FC = () => {
 
   return (
     <div className="chatbot-container">
-      <div className="header">
-        <h1>🎤 스피치유형진단 툴킷</h1>
-        <p>당신의 스피치 스타일을 발견하세요</p>
+      <div className="header"  style={{
+    textAlign: 'center',
+  }}>
+        <h1>🎤스피치 유형 진단</h1>
+        <p style={{ marginTop: '16px' , textAlign: 'center',}}>  당신의 스피치 스타일을 발견하세요</p>
       </div>
 
       <div className="name-input-section">
@@ -887,22 +1034,48 @@ export const Chatbot: React.FC = () => {
 
       <div className="checklist-grid">
         {groupedItems.map((group) => (
-          <div key={group.type} className="type-section">
-            <h2 className="type-title">{group.displayName}</h2>
+          <div key={group.type} className="type-section"
+          style={{
+    backgroundColor: '#f5f3ff',
+    border: '1px solid #efecfd',
+    borderRadius: '18px',
+    padding: '24px',
+  }}
+          >
+            <h2 className="type-title"style={{
+    fontSize: '1.7rem',
+    fontWeight: 900,
+  }}>{group.displayName}</h2>
             <div className="checkbox-group">
               {group.items.map((item) => (
-                <label key={item.index} className="checkbox-item">
+                <label key={item.index} className="checkbox-item"
+                style={{
+backgroundColor: '#f4f2fd',
+border: 'none',
+  }}
+                >
                   <input
                     type="checkbox"
                     checked={checkedItems[item.index] || false}
                     onChange={() => handleCheckChange(item.index)}
                     className="checkbox-input"
                   />
-                  <span className="checkbox-label">{item.text}</span>
+                  <span className="checkbox-label"
+                    style={{
+    color: '#111827',
+    fontWeight: 500,
+    lineHeight: 1.6,
+  }}
+                  >{item.text}
+
+                  </span>
                 </label>
               ))}
             </div>
-            <div className="count-badge">
+            <div className="count-badge"style={{
+    fontSize: '16px',
+    fontWeight: 700,
+  }}>
               {countChecked(group.type)}/10 항목 선택됨
             </div>
           </div>
